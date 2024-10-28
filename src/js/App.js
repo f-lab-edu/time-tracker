@@ -1,6 +1,21 @@
+import Main from './Main';
+import Weekly from './Weekly';
+
 export default {
   init() {
-    const app = document.querySelector('#app');
-    app.innerHTML = `<h1>Time Tracker 프로젝트 시작</h1>`;
+    const currentPathName = window.location.pathname;
+
+    switch (currentPathName) {
+      case '/':
+        Main.init('#app');
+        break;
+
+      case '/weekly':
+        Weekly.init('#app');
+        break;
+
+      default:
+        Main.init('#app');
+    }
   },
 };
