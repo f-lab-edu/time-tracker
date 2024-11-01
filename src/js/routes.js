@@ -4,15 +4,13 @@ export const ROUTES = {
 };
 
 export const browserRouter = (url, componentCb) => {
-  const currentUrl = ROUTES[url];
-
-  if (!currentUrl) {
+  if (!url) {
     history.pushState(null, null, ROUTES.MAIN);
 
     return;
   }
 
-  history.pushState(null, null, currentUrl);
+  history.pushState(null, null, url);
 
   componentCb();
 };

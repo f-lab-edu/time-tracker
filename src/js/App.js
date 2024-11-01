@@ -13,15 +13,15 @@ export default {
 
     switch (currentPathName) {
       case '/':
-        browserRouter(ROUTES.MAIN, Main.init());
+        browserRouter(ROUTES.MAIN, Main.init.bind(this));
         break;
 
       case '/weekly':
-        browserRouter(ROUTES.WEEKLY, Weekly.init());
+        browserRouter(ROUTES.WEEKLY, Weekly.init.bind(this));
         break;
 
       default:
-        browserRouter(ROUTES.MAIN, Main.init());
+        browserRouter(ROUTES.MAIN, Main.init.bind(this));
     }
   },
 };
