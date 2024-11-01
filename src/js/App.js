@@ -1,3 +1,5 @@
+import { ROUTES, browserRouter } from './routes';
+
 import Main from './Main';
 import Weekly from './Weekly';
 
@@ -7,15 +9,15 @@ export default {
 
     switch (currentPathName) {
       case '/':
-        Main.init('#app');
+        browserRouter(ROUTES.MAIN, Main.init());
         break;
 
       case '/weekly':
-        Weekly.init('#app');
+        browserRouter(ROUTES.WEEKLY, Weekly.init());
         break;
 
       default:
-        Main.init('#app');
+        browserRouter(ROUTES.MAIN, Main.init());
     }
   },
 };

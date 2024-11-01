@@ -1,10 +1,7 @@
-import routes from './routes';
-
 export default {
-  init(selector) {
-    this.el = document.querySelector(selector);
+  init() {
+    this.weeklyElement = document.querySelector('#app');
 
-    history.pushState(null, null, routes.weekly);
-    this.el.innerHTML = `<h1>Weekly 입니다.</h1>`;
+    this.weeklyElement.innerHTML = `<h1>Weekly 입니다.</h1>`;
   },
 };
