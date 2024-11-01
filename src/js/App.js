@@ -3,6 +3,7 @@ import { ROUTES, browserRouter } from './routes';
 
 import Main from './Main';
 import Weekly from './Weekly';
+import Header from './common/Layout/Header';
 
 export default {
   init() {
@@ -23,5 +24,13 @@ export default {
       default:
         browserRouter(ROUTES.MAIN, Main.init.bind(this));
     }
+
+    Header.emitElement('.link-tracker').addEventListener('click', () => {
+      browserRouter(ROUTES.MAIN, Main.init.bind(this));
+    });
+
+    Header.emitElement('.btn-header-weekly').addEventListener('click', () => {
+      browserRouter(ROUTES.WEEKLY, Weekly.init.bind(this));
+    });
   },
 };

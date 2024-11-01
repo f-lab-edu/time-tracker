@@ -15,7 +15,7 @@ export default {
         <h1>
           <button class="link-tracker">Time Tracker</button>
         </h1>
-        <h2 class="tit-date">Oct. 11. 1. Fri</h2>
+        <h2 class="tit-date"></h2>
         <div class="wrap-btns">
           <button type="button" class="btn-header btn-header-weekly">일주일 기록 보기</button>
           <button type="button" class="btn-header btn-header-record">기록하기</button>
@@ -23,5 +23,7 @@ export default {
       </div>
     `;
   },
-  goMain() {},
+  emitElement(selector) {
+    return document.querySelector(selector);
+  },
 };
