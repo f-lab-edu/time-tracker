@@ -1,6 +1,13 @@
+import date from '/js/utils/date';
+
 export default {
   init() {
-    document.querySelector('.header').innerHTML = this.render();
+    this.headerElement = document.querySelector('.header');
+
+    this.headerElement.innerHTML = this.render();
+
+    this.titleDate = document.querySelector('.tit-date');
+    this.titleDate.innerHTML = date.getMonthDay();
   },
   render() {
     return `
