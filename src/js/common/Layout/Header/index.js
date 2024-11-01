@@ -13,7 +13,7 @@ export default {
     return `
       <div class="header-inner">
         <h1>
-          <a href="/" class="link-tracker">Time Tracker</a>
+          <button class="link-tracker">Time Tracker</button>
         </h1>
         <h2 class="tit-date">Oct. 11. 1. Fri</h2>
         <div class="wrap-btns">
