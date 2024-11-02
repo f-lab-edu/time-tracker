@@ -1,16 +1,22 @@
 export const ROUTES = {
-  MAIN: '/',
-  WEEKLY: '/weekly',
+  Daily: {
+    url: '/',
+    name: 'daily',
+  },
+  WEEKLY: {
+    url: '/weekly',
+    name: 'weekly',
+  },
 };
 
 export const browserRouter = (url, componentCb) => {
   if (!url) {
-    history.pushState(null, null, ROUTES.MAIN);
+    history.pushState(null, null, ROUTES.Daily.url);
 
     return;
   }
 
-  history.pushState(null, null, url);
+  history.pushState({ name: url.name }, null, url.url);
 
   componentCb();
 };

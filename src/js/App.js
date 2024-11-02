@@ -12,7 +12,7 @@ export default {
 
     switch (currentPathName) {
       case '/':
-        browserRouter(ROUTES.MAIN, Daily.init.bind(this));
+        browserRouter(ROUTES.Daily, Daily.init.bind(this));
         break;
 
       case '/weekly':
@@ -20,15 +20,7 @@ export default {
         break;
 
       default:
-        browserRouter(ROUTES.MAIN, Daily.init.bind(this));
+        browserRouter(ROUTES.Daily, Daily.init.bind(this));
     }
-
-    Header.emitElement('.btn-tracker').addEventListener('click', () => {
-      browserRouter(ROUTES.MAIN, Daily.init.bind(this));
-    });
-
-    Header.emitElement('.btn-header-weekly').addEventListener('click', () => {
-      browserRouter(ROUTES.WEEKLY, Weekly.init.bind(this));
-    });
   },
 };
