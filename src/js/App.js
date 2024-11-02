@@ -1,4 +1,3 @@
-import Layout from './common/Layout';
 import { ROUTES, browserRouter } from './routes';
 
 import Main from './Main';
@@ -8,9 +7,8 @@ import Header from './common/Layout/Header';
 export default {
   init() {
     const currentPathName = window.location.pathname;
-    const rootElement = document.querySelector('#app');
 
-    Layout.init(rootElement);
+    Header.init();
 
     switch (currentPathName) {
       case '/':
