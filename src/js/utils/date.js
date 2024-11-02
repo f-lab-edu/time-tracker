@@ -1,9 +1,6 @@
 export default {
-  date() {
-    return new Date();
-  },
-  getMonth() {
-    switch (this.date().getMonth()) {
+  getMonth(date) {
+    switch (date.getMonth()) {
       case 0:
         return 'Jan';
 
@@ -41,8 +38,8 @@ export default {
         return 'Dec';
     }
   },
-  getDay() {
-    switch (this.date().getDay()) {
+  getDay(date) {
+    switch (date.getDay()) {
       case 0:
         return 'Sun';
 
@@ -65,10 +62,11 @@ export default {
         return 'Sat';
     }
   },
-  getDate() {
-    return this.date().getDate();
+  getDate(date) {
+    return date.getDate();
   },
-  getMonthDay() {
-    return `${this.getMonth()}. ${this.getDate()}. ${this.getDay()}`;
+  getCurrentMonthAndDay() {
+    const date = new Date();
+    return `${this.getMonth(date)}. ${this.getDate(date)}. ${this.getDay(date)}`;
   },
 };

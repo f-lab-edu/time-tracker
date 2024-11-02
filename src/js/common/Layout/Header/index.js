@@ -10,7 +10,7 @@ export default {
     this.headerElement.innerHTML = this.renderView();
 
     this.titleDate = document.querySelector('.tit-date');
-    this.titleDate.innerHTML = date.getMonthDay();
+    this.titleDate.innerHTML = date.getCurrentMonthAndDay();
 
     this.btnTrackerElement = document.querySelector('.btn-tracker');
     this.btnHeaderWeekly = document.querySelector('.btn-header-weekly');
