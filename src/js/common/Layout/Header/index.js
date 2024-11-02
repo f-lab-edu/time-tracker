@@ -4,16 +4,16 @@ export default {
   init() {
     this.headerElement = document.querySelector('.header');
 
-    this.headerElement.innerHTML = this.render();
+    this.headerElement.innerHTML = this.renderView();
 
     this.titleDate = document.querySelector('.tit-date');
     this.titleDate.innerHTML = date.getMonthDay();
   },
-  render() {
+  renderView() {
     return `
       <div class="header-inner">
         <h1>
-          <button class="link-tracker">Time Tracker</button>
+          <button class="btn-tracker">Time Tracker</button>
         </h1>
         <h2 class="tit-date"></h2>
         <div class="wrap-btns">
@@ -23,6 +23,7 @@ export default {
       </div>
     `;
   },
+  movePage() {},
   emitElement(selector) {
     return document.querySelector(selector);
   },

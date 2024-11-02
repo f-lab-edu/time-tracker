@@ -1,6 +1,6 @@
 import { ROUTES, browserRouter } from './routes';
 
-import Main from './Main';
+import Daily from './Daily.js';
 import Weekly from './Weekly';
 import Header from './common/Layout/Header';
 
@@ -12,7 +12,7 @@ export default {
 
     switch (currentPathName) {
       case '/':
-        browserRouter(ROUTES.MAIN, Main.init.bind(this));
+        browserRouter(ROUTES.MAIN, Daily.init.bind(this));
         break;
 
       case '/weekly':
@@ -20,11 +20,11 @@ export default {
         break;
 
       default:
-        browserRouter(ROUTES.MAIN, Main.init.bind(this));
+        browserRouter(ROUTES.MAIN, Daily.init.bind(this));
     }
 
-    Header.emitElement('.link-tracker').addEventListener('click', () => {
-      browserRouter(ROUTES.MAIN, Main.init.bind(this));
+    Header.emitElement('.btn-tracker').addEventListener('click', () => {
+      browserRouter(ROUTES.MAIN, Daily.init.bind(this));
     });
 
     Header.emitElement('.btn-header-weekly').addEventListener('click', () => {
