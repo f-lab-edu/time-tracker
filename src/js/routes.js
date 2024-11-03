@@ -1,5 +1,8 @@
+import Daily from './Daily.js';
+import Weekly from './Weekly.js';
+
 export const ROUTES = {
-  Daily: {
+  DAILY: {
     url: '/',
     name: 'daily',
   },
@@ -9,14 +12,25 @@ export const ROUTES = {
   },
 };
 
-export const browserRouter = (url, componentCb) => {
-  if (!url) {
-    history.pushState(null, null, ROUTES.Daily.url);
+export const route = {
+  daily: {
+    path: ROUTES.DAILY.url,
+    renderElement: Daily.init,
+  },
+  weekly: {
+    path: ROUTES.WEEKLY.url,
+    renderElement: Weekly.init,
+  },
+};
+
+export const browserRouter = (routeInfo, pageName) => {
+  if (!routeInfo.url) {
+    history.pushState(ROUTES.DAILY, null, ROUTES.DAILY.url);
 
     return;
   }
 
-  history.pushState({ name: url.name }, null, url.url);
+  history.pushState(routeInfo, null, routeInfo.url);
 
-  componentCb();
+  route[pageName].renderElement();
 };

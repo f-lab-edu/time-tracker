@@ -1,6 +1,5 @@
 import date from '/js/utils/date';
-import Weekly from '/js/Weekly.js';
-import Daily from '/js/Daily.js';
+
 import { ROUTES, browserRouter } from '../../../routes.js';
 
 export default {
@@ -16,11 +15,11 @@ export default {
     this.btnHeaderWeekly = document.querySelector('.btn-header-weekly');
 
     this.btnTrackerElement.addEventListener('click', () => {
-      browserRouter(ROUTES.Daily, Daily.init.bind(this));
+      browserRouter(ROUTES.DAILY, 'daily');
     });
 
     this.btnHeaderWeekly.addEventListener('click', () => {
-      browserRouter(ROUTES.WEEKLY, Weekly.init.bind(this));
+      browserRouter(ROUTES.WEEKLY, 'weekly');
     });
   },
   renderView() {
