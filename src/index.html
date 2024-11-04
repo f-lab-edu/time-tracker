@@ -21,7 +21,13 @@
               <form action="#none">
                 <dl class="daily-record">
                   <div class="wrap-daily">
-                    <dt>집중한 시간</dt>
+                    <dt>
+                      <span class="txt-essential"
+                        >*
+                        <span class="blind">필수</span>
+                      </span>
+                      집중한 시간
+                    </dt>
                     <dd>
                       <label for="trackerHour" class="blind">시간 선택</label>
                       <select
@@ -59,7 +65,13 @@
                   </div>
                   <div class="wrap-daily">
                     <dt>
-                      <label for="trackerWork">하는 일</label>
+                      <label for="trackerWork">
+                        <span class="txt-essential"
+                          >*
+                          <span class="blind">필수</span>
+                        </span>
+                        하는 일</label
+                      >
                     </dt>
                     <dd>
                       <input
@@ -70,7 +82,13 @@
                     </dd>
                   </div>
                   <div class="wrap-daily">
-                    <dt>소요시간</dt>
+                    <dt>
+                      <span class="txt-essential"
+                        >*
+                        <span class="blind">필수</span>
+                      </span>
+                      소요시간
+                    </dt>
                     <dd>
                       <div class="wrap-spend">
                         <div class="box-time">
@@ -113,7 +131,11 @@
                       <label for="score">집중 점수</label>
                     </dt>
                     <dd>
-                      <input type="text" id="score" class="tf-daily tf-score" />
+                      <input
+                        type="text"
+                        id="score"
+                        class="tf-daily tf-score"
+                        placeholder="99.9" />
                       <span class="txt-score">점</span>
                     </dd>
                   </div>
@@ -122,7 +144,11 @@
                       <label for="hurdle">허들</label>
                     </dt>
                     <dd>
-                      <input type="text" id="hurdle" class="tf-daily" />
+                      <input
+                        type="text"
+                        id="hurdle"
+                        class="tf-daily"
+                        placeholder="방해된 요소를 입력해주세요." />
                       <div class="wrap-hurdles">
                         <div class="tag">
                           <span class="txt-tag">youtube</span>
@@ -144,6 +170,8 @@
                         id="retrospect"
                         class="tf-retrospect"
                         name="retrospect"
+                        maxlength="100"
+                        placeholder="100자 이내로 입력해 주세요."
                         rows="5"></textarea>
                     </dd>
                   </div>
