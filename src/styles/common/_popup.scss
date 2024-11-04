@@ -17,6 +17,10 @@
     &-header {
       padding: 16px;
       border-bottom: 1px solid #dfe1e6;
+
+      .popup-title {
+        font-size: var(--text-xl);
+      }
     }
 
     &-body {
@@ -64,15 +68,11 @@
         padding-top: 16px;
       }
 
-      & > dt {
+      .daily-title {
         width: 90px;
         height: 30px;
         line-height: 30px;
         flex-shrink: 0;
-      }
-
-      & > dd {
-        margin: 0;
       }
     }
 
@@ -104,13 +104,10 @@
     .wrap-spend {
       display: flex;
       align-items: center;
+      gap: 16px;
       height: 100%;
 
       .box-time {
-        & + .box-time {
-          padding-left: 16px;
-        }
-
         & > label {
           cursor: pointer;
         }
