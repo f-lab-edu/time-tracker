@@ -1,0 +1,61 @@
+.header {
+  border-bottom: 1px solid #d0d5dd;
+
+  &-inner {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 0 16px;
+  }
+
+  h1 {
+    overflow: hidden;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+
+  .btn-tracker {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: 0 none;
+    font-size: 1px;
+    text-indent: -9999px;
+    background-image: url('/assets/icons/ico-tracker.png');
+    background-size: 24px 24px;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .tit-date {
+    flex: 1;
+    margin-top: 4px;
+    font-size: var(--title-xs);
+  }
+
+  .wrap-btns {
+    display: flex;
+  }
+
+  .btn-header {
+    display: inline-flex;
+    align-items: center;
+    height: 30px;
+    border: 1px solid #475467;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: transparent;
+    outline: 0 none;
+    cursor: pointer;
+
+    &:hover {
+      color: #fff;
+      background-color: #475467;
+    }
+
+    &-weekly {
+      margin-right: 8px;
+    }
+  }
+}

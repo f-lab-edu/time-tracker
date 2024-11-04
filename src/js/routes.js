@@ -1,18 +1,36 @@
+import Daily from './Daily.js';
+import Weekly from './Weekly.js';
+
 export const ROUTES = {
-  MAIN: '/',
-  WEEKLY: '/weekly',
+  DAILY: {
+    url: '/',
+    name: 'daily',
+  },
+  WEEKLY: {
+    url: '/weekly',
+    name: 'weekly',
+  },
 };
 
-export const browserRouter = (url, componentCb) => {
-  const currentUrl = ROUTES[url];
+export const route = {
+  daily: {
+    path: ROUTES.DAILY.url,
+    renderElement: Daily.init,
+  },
+  weekly: {
+    path: ROUTES.WEEKLY.url,
+    renderElement: Weekly.init,
+  },
+};
 
-  if (!currentUrl) {
-    history.pushState(null, null, ROUTES.MAIN);
+export const browserRouter = (routeInfo, pageName) => {
+  if (!routeInfo.url) {
+    history.pushState(ROUTES.DAILY, null, ROUTES.DAILY.url);
 
     return;
   }
 
-  history.pushState(null, null, currentUrl);
+  history.pushState(routeInfo, null, routeInfo.url);
 
-  componentCb();
+  route[pageName].renderElement();
 };
