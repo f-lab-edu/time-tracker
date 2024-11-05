@@ -11,6 +11,7 @@ Header.init = function () {
 
   this.btnTrackerElement = document.querySelector('.btn-tracker');
   this.btnHeaderWeekly = document.querySelector('.btn-header-weekly');
+  this.btnHeaderRecord = document.querySelector('.btn-header-record');
 
   this.onClick(this.btnTrackerElement, () =>
     browserRouter(ROUTES.DAILY, 'daily'),
@@ -18,6 +19,8 @@ Header.init = function () {
   this.onClick(this.btnHeaderWeekly, () =>
     browserRouter(ROUTES.WEEKLY, 'weekly'),
   );
+
+  this.onClick(this.btnHeaderRecord, this.dailyPopupHandler);
 };
 
 Header.renderView = function () {
@@ -33,6 +36,10 @@ Header.renderView = function () {
         </div>
       </div>
     `;
+};
+
+Header.dailyPopupHandler = function () {
+  alert('모달 준비 진행 중');
 };
 
 export default Header;
