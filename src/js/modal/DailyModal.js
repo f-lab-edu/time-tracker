@@ -13,6 +13,48 @@ DailyModal.init = function () {
   );
 };
 
+DailyModal.spendTimeHtml = function () {
+  const spendTime = [
+    {
+      id: 'minuit30',
+      name: 'spendTime',
+      value: '30',
+    },
+    {
+      id: 'minuit60',
+      name: 'spendTime',
+      value: '60',
+    },
+    {
+      id: 'minuit90',
+      name: 'spendTime',
+      value: '90',
+    },
+    {
+      id: 'inProgress',
+      name: 'spendTime',
+      value: '진행중',
+    },
+  ];
+
+  return (
+    spendTime.reduce((html, item) => {
+      const { id, name, value } = item;
+
+      html += ` <div class="box-time">
+                  <input
+                    type="radio"
+                    id="${id}"
+                    name="${name}"
+                    value="${value}" />
+                  <label for="${id}">${id === 'inProgress' ? '진행중' : value + '분'}</label>
+                  </div>`;
+
+      return html;
+    }, '<div class="wrap-spend">') + '</div>'
+  );
+};
+
 DailyModal.renderView = function () {
   return `
       <form action="#none">
@@ -43,6 +85,18 @@ DailyModal.renderView = function () {
                 <option value="10">10</option>
                 <option value="11">11</option>
                 <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
               </select>
               <span class="txt-time">시</span>
               <label for="trackerMinute" class="blind">분 선택</label>
@@ -50,7 +104,7 @@ DailyModal.renderView = function () {
                 name="trackerTime"
                 id="trackerMinute"
                 class="opt-time">
-                <option value="0">0</option>
+                <option value="0">00</option>
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
@@ -87,40 +141,7 @@ DailyModal.renderView = function () {
               소요시간
             </strong>
             <div class="daily-detail">
-              <div class="wrap-spend">
-                <div class="box-time">
-                  <input
-                    type="radio"
-                    id="minuit30"
-                    name="spendTime"
-                    value="30" />
-                  <label for="minuit30">30분</label>
-                </div>
-                <div class="box-time">
-                  <input
-                    type="radio"
-                    id="minuit60"
-                    name="spendTime"
-                    value="60" />
-                  <label for="minuit60">60분</label>
-                </div>
-                <div class="box-time">
-                  <input
-                    type="radio"
-                    id="minuit90"
-                    name="spendTime"
-                    value="90" />
-                  <label for="minuit90">90분</label>
-                </div>
-                <div class="box-time">
-                  <input
-                    type="radio"
-                    id="inProgress"
-                    name="spendTime"
-                    value="inProgress" />
-                  <label for="inProgress">진행중</label>
-                </div>
-              </div>
+            ${this.spendTimeHtml()}
             </div>
           </div>
           <div class="wrap-daily">
