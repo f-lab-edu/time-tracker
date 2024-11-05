@@ -15,6 +15,9 @@ export default {
 
     return this;
   },
+  removeView(element) {
+    element.innerHTML = '';
+  },
   onClick(element, cb) {
     element.addEventListener('click', cb);
   },

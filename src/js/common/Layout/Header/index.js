@@ -1,5 +1,6 @@
 import date from '/js/utils/date';
 import TrackerCommon from '/js/common/TrackerCommon';
+import DailyModal from '/js/modal/DailyModal.js';
 
 import { ROUTES, browserRouter } from '/js/routes.js';
 
@@ -39,7 +40,7 @@ Header.renderView = function () {
 };
 
 Header.dailyPopupHandler = function () {
-  alert('모달 준비 진행 중');
+  DailyModal.init();
 };
 
 export default Header;

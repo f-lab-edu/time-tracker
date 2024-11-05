@@ -1,6 +1,17 @@
 import TrackerCommon from '../common/TrackerCommon.js';
+import ModalLayout from './ModalLayout.js';
 
 const DailyModal = Object.create(TrackerCommon);
+
+DailyModal.init = function () {
+  ModalLayout.setup('#trackerModal', ModalLayout.renderView('Daily 기록하기'))
+    .insertContent(DailyModal.renderView())
+    .init();
+
+  this.onClick(ModalLayout.btnFooterCloseElement, () =>
+    this.removeView(ModalLayout.element),
+  );
+};
 
 DailyModal.renderView = function () {
   return `
