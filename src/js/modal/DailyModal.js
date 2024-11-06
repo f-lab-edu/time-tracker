@@ -4,9 +4,14 @@ import ModalLayout from './ModalLayout.js';
 const DailyModal = Object.create(TrackerCommon);
 
 DailyModal.init = function () {
-  ModalLayout.setup('#trackerModal', ModalLayout.renderView('Daily 기록하기'))
-    .insertContent(DailyModal.renderView())
-    .init();
+  const trackerModalElement = document.querySelector('#trackerModal');
+
+  const drawHtml = {
+    title: 'Daily 기록하기',
+    modalContent: this.drawHtml(),
+  };
+
+  ModalLayout.setup(trackerModalElement).render(drawHtml);
 
   this.onClick(ModalLayout.btnFooterCloseElement, () =>
     this.removeView(ModalLayout.element),
@@ -55,7 +60,7 @@ DailyModal.spendTimeHtml = function () {
   );
 };
 
-DailyModal.renderView = function () {
+DailyModal.drawHtml = function () {
   return `
       <form action="#none">
         <div class="daily-record">

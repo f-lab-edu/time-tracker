@@ -6,6 +6,10 @@ import { ROUTES, browserRouter } from '/js/routes.js';
 
 const Header = Object.create(TrackerCommon);
 
+Header.render = function () {
+  this.renderView(this.element, this.drawHtml()).init();
+};
+
 Header.init = function () {
   this.titleDate = document.querySelector('.tit-date');
   this.titleDate.innerHTML = date.getCurrentMonthAndDay();
@@ -24,7 +28,7 @@ Header.init = function () {
   this.onClick(this.btnHeaderRecord, this.dailyPopupHandler);
 };
 
-Header.renderView = function () {
+Header.drawHtml = function () {
   return `
       <div class="header-inner">
         <h1>

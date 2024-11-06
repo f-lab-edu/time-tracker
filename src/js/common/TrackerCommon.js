@@ -1,12 +1,8 @@
 export default {
-  setup(selector, html) {
-    this.element = document.querySelector(selector);
+  setup(element) {
+    if (!element) throw Error('element가 없습니다.');
 
-    if (!html) {
-      return this;
-    }
-
-    this.element.innerHTML = html;
+    this.element = element;
 
     return this;
   },
