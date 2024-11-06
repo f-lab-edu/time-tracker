@@ -1,17 +1,17 @@
 export default {
-  setup(selector, render) {
+  setup(selector, html) {
     this.element = document.querySelector(selector);
 
-    if (!render) {
+    if (!html) {
       return this;
     }
 
-    this.element.innerHTML = render;
+    this.element.innerHTML = html;
 
     return this;
   },
-  renderView(element, render) {
-    element.innerHTML = render;
+  renderView(element, html) {
+    element.innerHTML = html;
 
     return this;
   },
