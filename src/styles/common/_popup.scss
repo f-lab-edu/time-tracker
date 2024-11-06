@@ -1,0 +1,159 @@
+.popup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  &-content {
+    border-radius: 16px;
+    background-color: #fff;
+    box-sizing: border-box;
+
+    &-header {
+      padding: 16px;
+      border-bottom: 1px solid #dfe1e6;
+
+      .popup-title {
+        font-size: var(--text-xl);
+      }
+    }
+
+    &-body {
+      padding: 16px;
+    }
+
+    &-footer {
+      padding: 16px;
+      text-align: center;
+
+      .btn-footer {
+        height: 32px;
+        padding: 0 12px;
+        margin: 0 4px;
+        border: 0;
+        border-radius: 4px;
+        line-height: 34px;
+        cursor: pointer;
+
+        &-save {
+          color: #fff;
+          background-color: #0747a6;
+        }
+
+        &-close {
+          color: #172b4d;
+          background-color: #dfe1e6;
+        }
+      }
+    }
+
+    .txt-essential {
+      color: #de350b;
+      text-align: center;
+    }
+  }
+
+  .daily-record {
+    margin: 0;
+
+    .wrap-daily {
+      display: flex;
+
+      & + .wrap-daily {
+        padding-top: 16px;
+      }
+
+      .daily-title {
+        width: 90px;
+        height: 30px;
+        line-height: 30px;
+        flex-shrink: 0;
+      }
+    }
+
+    .opt-time {
+      height: 30px;
+      padding: 0 16px 0 8px;
+      border-radius: 4px;
+      line-height: 30px;
+      cursor: pointer;
+    }
+
+    .txt-time {
+      padding: 0 8px 0 2px;
+    }
+
+    .tf-daily {
+      width: 300px;
+      height: 30px;
+      padding: 0 16px;
+      border: 1px solid #253858;
+      border-radius: 4px;
+      outline: 0;
+
+      &.tf-score {
+        width: 60px;
+      }
+    }
+
+    .wrap-spend {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      height: 100%;
+
+      .box-time {
+        & > label {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .txt-score {
+      padding-left: 8px;
+    }
+
+    .wrap-hurdles {
+      padding-top: 8px;
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        height: 24px;
+        padding: 0 8px;
+        margin: 4px 4px 0 0;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 14px;
+        color: #172b4d;
+        background-color: #dfe1e6;
+      }
+
+      .btn-close {
+        overflow: hidden;
+        width: 16px;
+        height: 16px;
+        padding: 0;
+        margin-left: 4px;
+        font-size: 1px;
+        border: 0;
+        background-color: transparent;
+        background-image: url('/assets/icons/ico-delete.png');
+        background-size: 16px 16px;
+        text-indent: -999px;
+        cursor: pointer;
+      }
+    }
+
+    .tf-retrospect {
+      width: 300px;
+      padding: 16px;
+      border-radius: 4px;
+    }
+  }
+}

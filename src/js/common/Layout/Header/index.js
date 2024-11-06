@@ -1,29 +1,31 @@
 import date from '/js/utils/date';
+import TrackerCommon from '/js/common/TrackerCommon';
+import DailyModal from '/js/modal/DailyModal.js';
 
-import { ROUTES, browserRouter } from '../../../routes.js';
+import { ROUTES, browserRouter } from '/js/routes.js';
 
-export default {
-  init() {
-    this.headerElement = document.querySelector('.header');
+const Header = Object.create(TrackerCommon);
 
-    this.headerElement.innerHTML = this.renderView();
+Header.init = function () {
+  this.titleDate = document.querySelector('.tit-date');
+  this.titleDate.innerHTML = date.getCurrentMonthAndDay();
 
-    this.titleDate = document.querySelector('.tit-date');
-    this.titleDate.innerHTML = date.getCurrentMonthAndDay();
+  this.btnTrackerElement = document.querySelector('.btn-tracker');
+  this.btnHeaderWeekly = document.querySelector('.btn-header-weekly');
+  this.btnHeaderRecord = document.querySelector('.btn-header-record');
 
-    this.btnTrackerElement = document.querySelector('.btn-tracker');
-    this.btnHeaderWeekly = document.querySelector('.btn-header-weekly');
+  this.onClick(this.btnTrackerElement, () =>
+    browserRouter(ROUTES.DAILY, 'daily'),
+  );
+  this.onClick(this.btnHeaderWeekly, () =>
+    browserRouter(ROUTES.WEEKLY, 'weekly'),
+  );
 
-    this.btnTrackerElement.addEventListener('click', () => {
-      browserRouter(ROUTES.DAILY, 'daily');
-    });
+  this.onClick(this.btnHeaderRecord, this.dailyPopupHandler);
+};
 
-    this.btnHeaderWeekly.addEventListener('click', () => {
-      browserRouter(ROUTES.WEEKLY, 'weekly');
-    });
-  },
-  renderView() {
-    return `
+Header.renderView = function () {
+  return `
       <div class="header-inner">
         <h1>
           <button class="btn-tracker">Time Tracker</button>
@@ -35,9 +37,10 @@ export default {
         </div>
       </div>
     `;
-  },
-  movePage() {},
-  emitElement(selector) {
-    return document.querySelector(selector);
-  },
 };
+
+Header.dailyPopupHandler = function () {
+  DailyModal.init();
+};
+
+export default Header;

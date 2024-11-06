@@ -6,7 +6,7 @@ export default {
   init() {
     const currentPathName = window.location.pathname;
 
-    Header.init();
+    Header.setup('.header', Header.renderView()).init();
 
     switch (currentPathName) {
       case '/':
