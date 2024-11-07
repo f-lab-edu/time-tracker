@@ -6,8 +6,8 @@ import { ROUTES, browserRouter } from '/js/routes.js';
 
 const Header = Object.create(TrackerCommon);
 
-Header.render = function () {
-  this.renderView(this.element, this.drawHtml()).init();
+Header.render = function (element) {
+  this.setup(element).renderView(this.element, this.drawHtml()).init();
 };
 
 Header.init = function () {
