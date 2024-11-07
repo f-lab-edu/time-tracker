@@ -14,7 +14,18 @@ export default {
   removeView(element) {
     element.innerHTML = '';
   },
+  disableHtml(element) {
+    element.setAttribute('disabled', true);
+  },
+  ableHtml(element) {
+    element.removeAttribute('disabled');
+  },
   onClick(element, cb) {
     element.addEventListener('click', cb);
+  },
+  onChange(elements, cb) {
+    elements.forEach(function (radio) {
+      radio.addEventListener('change', cb);
+    });
   },
 };

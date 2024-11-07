@@ -14,9 +14,31 @@ DailyModal.init = function () {
 
   ModalLayout.setup(trackerModalElement).render(drawHtml);
 
+  const spendTimeRadioElements = document.querySelectorAll(
+    'input[name="spendTime"]',
+  );
+
+  this.scoreElement = document.querySelector('#score');
+  this.hurdleElement = document.querySelector('#hurdle');
+  this.retrospectElement = document.querySelector('#retrospect');
+
   this.onClick(ModalLayout.btnFooterCloseElement, () =>
     this.removeView(ModalLayout.element),
   );
+
+  this.onChange(spendTimeRadioElements, this.radioHandler.bind(this));
+};
+
+DailyModal.radioHandler = function (event) {
+  if (event.target.value === '진행중') {
+    this.disableHtml(this.scoreElement);
+    this.disableHtml(this.hurdleElement);
+    this.disableHtml(this.retrospectElement);
+  } else {
+    this.ableHtml(this.scoreElement);
+    this.ableHtml(this.hurdleElement);
+    this.ableHtml(this.retrospectElement);
+  }
 };
 
 DailyModal.radioBox = function (radioData) {
