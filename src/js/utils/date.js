@@ -1,66 +1,26 @@
 export default {
   getMonth(date) {
-    switch (date.getMonth()) {
-      case 0:
-        return 'Jan';
+    const month = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
 
-      case 1:
-        return 'Feb';
-
-      case 2:
-        return 'Mar';
-
-      case 3:
-        return 'Apr';
-
-      case 4:
-        return 'May';
-
-      case 5:
-        return 'Jun';
-
-      case 6:
-        return 'Jul';
-
-      case 7:
-        return 'Aug';
-
-      case 8:
-        return 'Sep';
-
-      case 9:
-        return 'Oct';
-
-      case 10:
-        return 'Nov';
-
-      case 11:
-        return 'Dec';
-    }
+    return month[date.getMonth()];
   },
   getDay(date) {
-    switch (date.getDay()) {
-      case 0:
-        return 'Sun';
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-      case 1:
-        return 'Mon';
-
-      case 2:
-        return 'Tue';
-
-      case 3:
-        return 'Wed';
-
-      case 4:
-        return 'Thu';
-
-      case 5:
-        return 'Fri';
-
-      case 6:
-        return 'Sat';
-    }
+    return days[date.getDay()];
   },
   getDate(date) {
     return date.getDate();
