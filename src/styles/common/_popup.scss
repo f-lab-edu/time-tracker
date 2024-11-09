@@ -99,6 +99,11 @@
       &.tf-score {
         width: 60px;
       }
+
+      &:disabled {
+        border-color: #fafbfc;
+        color: #a5adba;
+      }
     }
 
     .wrap-spend {
@@ -154,6 +159,11 @@
       width: 300px;
       padding: 16px;
       border-radius: 4px;
+
+      &:disabled {
+        border-color: #fafbfc;
+        color: #a5adba;
+      }
     }
   }
 }

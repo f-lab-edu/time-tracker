@@ -2,21 +2,22 @@ import TrackerCommon from '/js/common/TrackerCommon.js';
 
 const ModalLayout = Object.create(TrackerCommon);
 
-ModalLayout.insertContent = function (html) {
-  this.contentElement = document.querySelector('.popup-content-body');
+ModalLayout.render = function (modalData) {
+  const { title, modalContent } = modalData;
 
-  this.contentElement.innerHTML = html;
-
-  return this;
+  this.renderView(this.element, this.drawHtml(title)).init(modalContent);
 };
 
-ModalLayout.init = function () {
+ModalLayout.init = function (modalContentHtml) {
+  this.contentElement = document.querySelector('.popup-content-body');
   this.btnFooterCloseElement = document.querySelector('.btn-footer-close');
 
+  this.renderView(this.contentElement, modalContentHtml);
+
   return this;
 };
 
-ModalLayout.renderView = function (title) {
+ModalLayout.drawHtml = function (title) {
   return `
       <div class="popup">
         <div class="popup-content">

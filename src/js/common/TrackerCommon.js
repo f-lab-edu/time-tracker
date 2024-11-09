@@ -1,24 +1,31 @@
 export default {
-  setup(selector, render) {
-    this.element = document.querySelector(selector);
+  setup(element) {
+    if (!element) throw Error('element가 없습니다.');
 
-    if (!render) {
-      return this;
-    }
-
-    this.element.innerHTML = render;
+    this.element = element;
 
     return this;
   },
-  renderView(element, render) {
-    element.innerHTML = render;
+  renderView(element, html) {
+    element.innerHTML = html;
 
     return this;
   },
   removeView(element) {
     element.innerHTML = '';
   },
+  disableHtml(element) {
+    element.setAttribute('disabled', true);
+  },
+  ableHtml(element) {
+    element.removeAttribute('disabled');
+  },
   onClick(element, cb) {
     element.addEventListener('click', cb);
+  },
+  onChange(elements, cb) {
+    elements.forEach(function (radio) {
+      radio.addEventListener('change', cb);
+    });
   },
 };
