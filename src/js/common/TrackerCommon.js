@@ -28,4 +28,7 @@ export default {
       radio.addEventListener('change', cb);
     });
   },
+  onKeydown(element, cb) {
+    element.addEventListener('keydown', cb);
+  },
 };

@@ -1,5 +1,6 @@
 import TrackerCommon from '../common/TrackerCommon.js';
 import ModalLayout from './ModalLayout.js';
+import debounce from '../utils/debounce.js';
 import { spendTimeData, hourData, minuteData } from '/js/data/dailyModalData';
 
 const DailyModal = Object.create(TrackerCommon);
@@ -21,16 +22,56 @@ DailyModal.init = function () {
   this.scoreElement = document.querySelector('#score');
   this.hurdleElement = document.querySelector('#hurdle');
   this.retrospectElement = document.querySelector('#retrospect');
+  this.wrapHurdlesElement = document.querySelector('.wrap-hurdles');
 
   this.onClick(ModalLayout.btnFooterCloseElement, () =>
     this.removeView(ModalLayout.element),
   );
 
   this.onChange(spendTimeRadioElements, this.radioHandler.bind(this));
+
+  this.onKeydown(this.hurdleElement, this.hurdleInputHandler.bind(this));
+
+  this.onClick(this.wrapHurdlesElement, this.tagDeleteHandler.bind(this));
+};
+
+DailyModal.hurdleData = [];
+
+DailyModal.tagDeleteHandler = function (event) {
+  const { target } = event;
+
+  if (target.tagName !== 'BUTTON') return;
+
+  const currentIndex = Number(target.dataset.tagnumber);
+
+  this.hurdleData.splice(currentIndex, 1);
+
+  this.renderView(this.wrapHurdlesElement, this.drawTag(this.hurdleData));
+};
+
+DailyModal.hurdleInputHandler = function (event) {
+  const { target, key, isComposing } = event;
+
+  if (key === 'Enter' && isComposing) return;
+
+  switch (key) {
+    case ',':
+      debounce(() => (target.value = null), 0.1);
+      this.hurdleData.push(target.value);
+      this.renderView(this.wrapHurdlesElement, this.drawTag(this.hurdleData));
+      break;
+
+    case 'Enter':
+      debounce(() => (target.value = null), 0.1);
+      this.hurdleData.push(target.value);
+      this.renderView(this.wrapHurdlesElement, this.drawTag(this.hurdleData));
+      break;
+  }
 };
 
 DailyModal.radioHandler = function (event) {
   if (event.target.value === '진행중') {
+    this.hurdleElement.value = null;
     this.disableHtml(this.scoreElement);
     this.disableHtml(this.hurdleElement);
     this.disableHtml(this.retrospectElement);
@@ -76,6 +117,19 @@ DailyModal.selectBox = function (selectBoxData) {
       <label for="${id}" class="blind">${labelText}</label>
       ${optionHtml}
     `;
+};
+
+DailyModal.drawTag = function (tagData) {
+  return tagData.reduce((html, item, index) => {
+    html += ` 
+              <div class="tag">
+                <span class="txt-tag">${item}</span>
+                <button type="button" data-tagnumber="${index}" class="btn-close">닫기</button>
+              </div>
+            `;
+
+    return html;
+  }, '');
 };
 
 DailyModal.drawHtml = function () {
@@ -150,16 +204,7 @@ DailyModal.drawHtml = function () {
                 id="hurdle"
                 class="tf-daily"
                 placeholder="방해된 요소를 입력해주세요." />
-              <div class="wrap-hurdles">
-                <div class="tag">
-                  <span class="txt-tag">youtube</span>
-                  <button type="button" class="btn-close">닫기</button>
-                </div>
-                <div class="tag">
-                  <span class="txt-tag">youtube</span>
-                  <button type="button" class="btn-close">닫기</button>
-                </div>
-              </div>
+              <div class="wrap-hurdles"></div>
             </div>
           </div>
           <div class="wrap-daily">
