@@ -5,7 +5,7 @@ import {
   disableHtml,
   enableHtml,
   removeHtml,
-} from '../common/TrackerCommon.js';
+} from '/js/utils/domEvents.js';
 import ModalLayout from './ModalLayout.js';
 import debounce from '../utils/debounce.js';
 import { spendTimeData, hourData, minuteData } from '/js/data/dailyModalData';

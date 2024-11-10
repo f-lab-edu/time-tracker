@@ -1,5 +1,5 @@
 import date from '/js/utils/date';
-import { onClick } from '/js/common/TrackerCommon';
+import { onClick } from '/js/utils/domEvents.js';
 import DailyModal from '/js/modal/DailyModal.js';
 
 import { ROUTES, browserRouter } from '/js/routes.js';
