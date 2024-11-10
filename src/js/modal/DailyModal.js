@@ -1,6 +1,5 @@
 import {
   onClick,
-  onChange,
   onKeydown,
   disableHtml,
   enableHtml,
@@ -8,6 +7,9 @@ import {
 } from '/js/utils/domEvents.js';
 import ModalLayout from './ModalLayout.js';
 import debounce from '../utils/debounce.js';
+import RadioBox from '../common/RadioBox.js';
+import Tag from '../common/Tag.js';
+import SelectBox from '../common/SelectBox.js';
 import { spendTimeData, hourData, minuteData } from '/js/data/dailyModalData';
 
 const DailyModal = function () {
@@ -16,22 +18,25 @@ const DailyModal = function () {
 };
 
 DailyModal.prototype.init = function () {
+  this.selectBox = new SelectBox();
+  this.spendTimeRadioBox = new RadioBox();
   this.modalLayout.init(this.drawDailyModalHtml());
-
-  const spendTimeRadioElements = document.querySelectorAll(
-    'input[name="spendTime"]',
-  );
 
   this.scoreElement = document.querySelector('#score');
   this.hurdleElement = document.querySelector('#hurdle');
   this.retrospectElement = document.querySelector('#retrospect');
   this.wrapHurdlesElement = document.querySelector('.wrap-hurdles');
 
+  this.spendTimeRadioBox.onChange(
+    'input[name="spendTime"]',
+    this.radioHandler.bind(this),
+  );
+
+  this.hurdleTags = new Tag();
+
   onClick(this.modalLayout.btnFooterCloseElement, () =>
     removeHtml(this.modalLayout.element),
   );
-
-  onChange(spendTimeRadioElements, this.radioHandler.bind(this));
 
   onKeydown(this.hurdleElement, this.hurdleInputHandler.bind(this));
 
@@ -49,7 +54,7 @@ DailyModal.prototype.tagDeleteHandler = function (event) {
 
   this.hurdleData.splice(currentIndex, 1);
 
-  this.wrapHurdlesElement.innerHTML = this.drawTag(this.hurdleData);
+  this.wrapHurdlesElement.innerHTML = this.hurdleTags.drawTag(this.hurdleData);
 };
 
 DailyModal.prototype.hurdleInputHandler = function (event) {
@@ -61,13 +66,17 @@ DailyModal.prototype.hurdleInputHandler = function (event) {
     case ',':
       debounce(() => (target.value = null), 0.1);
       this.hurdleData.push(target.value);
-      this.wrapHurdlesElement.innerHTML = this.drawTag(this.hurdleData);
+      this.wrapHurdlesElement.innerHTML = this.hurdleTags.drawTag(
+        this.hurdleData,
+      );
       break;
 
     case 'Enter':
       debounce(() => (target.value = null), 0.1);
       this.hurdleData.push(target.value);
-      this.wrapHurdlesElement.innerHTML = this.drawTag(this.hurdleData);
+      this.wrapHurdlesElement.innerHTML = this.hurdleTags.drawTag(
+        this.hurdleData,
+      );
       break;
   }
 };
@@ -85,56 +94,6 @@ DailyModal.prototype.radioHandler = function (event) {
   }
 };
 
-DailyModal.prototype.radioBox = function (radioData) {
-  return (
-    radioData.reduce((html, item) => {
-      const { id, name, value } = item;
-
-      html += ` <div class="box-time">
-                  <input
-                    type="radio"
-                    id="${id}"
-                    name="${name}"
-                    value="${value}" />
-                  <label for="${id}">${id === 'inProgress' ? '진행중' : value + '분'}</label>
-                  </div>`;
-
-      return html;
-    }, '<div class="wrap-spend">') + '</div>'
-  );
-};
-
-DailyModal.prototype.selectBox = function (selectBoxData) {
-  const { labelText, id, name, optionData } = selectBoxData;
-
-  const optionHtml =
-    optionData.reduce((html, item) => {
-      const { value, text } = item;
-
-      html += `<option value="${value}">${text}</option>`;
-
-      return html;
-    }, `<select name="${name}" id="${id}" class="opt-time">`) + '</select>';
-
-  return `
-      <label for="${id}" class="blind">${labelText}</label>
-      ${optionHtml}
-    `;
-};
-
-DailyModal.prototype.drawTag = function (tagData) {
-  return tagData.reduce((html, item, index) => {
-    html += ` 
-              <div class="tag">
-                <span class="txt-tag">${item}</span>
-                <button type="button" data-tagnumber="${index}" class="btn-close">닫기</button>
-              </div>
-            `;
-
-    return html;
-  }, '');
-};
-
 DailyModal.prototype.drawDailyModalHtml = function () {
   return `
       <form action="#none">
@@ -148,9 +107,9 @@ DailyModal.prototype.drawDailyModalHtml = function () {
               집중한 시간
             </strong>
             <div class="daily-detail">
-              ${this.selectBox(hourData)}
+              ${this.selectBox.drawSelects(hourData)}
               <span class="txt-time">시</span>
-              ${this.selectBox(minuteData)}
+              ${this.selectBox.drawSelects(minuteData)}
               <span class="txt-time">분</span>
             </div>
           </div>
@@ -181,7 +140,9 @@ DailyModal.prototype.drawDailyModalHtml = function () {
               소요시간
             </strong>
             <div class="daily-detail">
-            ${this.radioBox(spendTimeData)}
+              <div class="wrap-spend">
+                ${this.spendTimeRadioBox.drawHtml(spendTimeData)}
+              </div>
             </div>
           </div>
           <div class="wrap-daily">
