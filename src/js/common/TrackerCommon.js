@@ -1,34 +1,29 @@
-export default {
-  setup(element) {
-    if (!element) throw Error('element가 없습니다.');
+export const renderView = (element, html) => {
+  element.innerHTML = html;
+};
 
-    this.element = element;
+export const removeHtml = (element, html) => {
+  element.innerHTML = '';
+};
 
-    return this;
-  },
-  renderView(element, html) {
-    element.innerHTML = html;
+export const disableHtml = (element) => {
+  element.setAttribute('disabled', true);
+};
 
-    return this;
-  },
-  removeView(element) {
-    element.innerHTML = '';
-  },
-  disableHtml(element) {
-    element.setAttribute('disabled', true);
-  },
-  ableHtml(element) {
-    element.removeAttribute('disabled');
-  },
-  onClick(element, cb) {
-    element.addEventListener('click', cb);
-  },
-  onChange(elements, cb) {
-    elements.forEach(function (radio) {
-      radio.addEventListener('change', cb);
-    });
-  },
-  onKeydown(element, cb) {
-    element.addEventListener('keydown', cb);
-  },
+export const enableHtml = (element) => {
+  element.removeAttribute('disabled');
+};
+
+export const onClick = (element, cb) => {
+  element.addEventListener('click', cb);
+};
+
+export const onChange = (elements, cb) => {
+  elements.forEach(function (radio) {
+    radio.addEventListener('change', cb);
+  });
+};
+
+export const onKeydown = (element, cb) => {
+  element.addEventListener('keydown', cb);
 };

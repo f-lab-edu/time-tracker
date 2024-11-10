@@ -1,16 +1,16 @@
 import date from '/js/utils/date';
-import TrackerCommon from '/js/common/TrackerCommon';
+import { onClick } from '/js/common/TrackerCommon';
 import DailyModal from '/js/modal/DailyModal.js';
 
 import { ROUTES, browserRouter } from '/js/routes.js';
 
-const Header = Object.create(TrackerCommon);
+const Header = function (element) {
+  this.element = element;
 
-Header.render = function (element) {
-  this.setup(element).renderView(this.element, this.drawHtml()).init();
+  this.element.innerHTML = this.drawHeaderHtml();
 };
 
-Header.init = function () {
+Header.prototype.init = function () {
   this.titleDate = document.querySelector('.tit-date');
   this.titleDate.innerHTML = date.getCurrentMonthAndDay();
 
@@ -18,17 +18,14 @@ Header.init = function () {
   this.btnHeaderWeekly = document.querySelector('.btn-header-weekly');
   this.btnHeaderRecord = document.querySelector('.btn-header-record');
 
-  this.onClick(this.btnTrackerElement, () =>
-    browserRouter(ROUTES.DAILY, 'daily'),
-  );
-  this.onClick(this.btnHeaderWeekly, () =>
-    browserRouter(ROUTES.WEEKLY, 'weekly'),
-  );
+  this.dailyModal = new DailyModal();
 
-  this.onClick(this.btnHeaderRecord, this.dailyPopupHandler);
+  onClick(this.btnTrackerElement, () => browserRouter(ROUTES.DAILY, 'daily'));
+  onClick(this.btnHeaderWeekly, () => browserRouter(ROUTES.WEEKLY, 'weekly'));
+  onClick(this.btnHeaderRecord, this.dailyPopupHandler.bind(this));
 };
 
-Header.drawHtml = function () {
+Header.prototype.drawHeaderHtml = function () {
   return `
       <div class="header-inner">
         <h1>
@@ -43,8 +40,8 @@ Header.drawHtml = function () {
     `;
 };
 
-Header.dailyPopupHandler = function () {
-  DailyModal.init();
+Header.prototype.dailyPopupHandler = function () {
+  this.dailyModal.init();
 };
 
 export default Header;

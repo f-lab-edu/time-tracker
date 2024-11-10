@@ -1,19 +1,22 @@
-import TrackerCommon from '../common/TrackerCommon.js';
+import {
+  onClick,
+  onChange,
+  onKeydown,
+  disableHtml,
+  enableHtml,
+  removeHtml,
+} from '../common/TrackerCommon.js';
 import ModalLayout from './ModalLayout.js';
 import debounce from '../utils/debounce.js';
 import { spendTimeData, hourData, minuteData } from '/js/data/dailyModalData';
 
-const DailyModal = Object.create(TrackerCommon);
-
-DailyModal.init = function () {
+const DailyModal = function () {
   const trackerModalElement = document.querySelector('#trackerModal');
+  this.modalLayout = new ModalLayout('Daily 기록하기', trackerModalElement);
+};
 
-  const drawHtml = {
-    title: 'Daily 기록하기',
-    modalContent: this.drawHtml(),
-  };
-
-  ModalLayout.setup(trackerModalElement).render(drawHtml);
+DailyModal.prototype.init = function () {
+  this.modalLayout.init(this.drawDailyModalHtml());
 
   const spendTimeRadioElements = document.querySelectorAll(
     'input[name="spendTime"]',
@@ -24,20 +27,20 @@ DailyModal.init = function () {
   this.retrospectElement = document.querySelector('#retrospect');
   this.wrapHurdlesElement = document.querySelector('.wrap-hurdles');
 
-  this.onClick(ModalLayout.btnFooterCloseElement, () =>
-    this.removeView(ModalLayout.element),
+  onClick(this.modalLayout.btnFooterCloseElement, () =>
+    removeHtml(this.modalLayout.element),
   );
 
-  this.onChange(spendTimeRadioElements, this.radioHandler.bind(this));
+  onChange(spendTimeRadioElements, this.radioHandler.bind(this));
 
-  this.onKeydown(this.hurdleElement, this.hurdleInputHandler.bind(this));
+  onKeydown(this.hurdleElement, this.hurdleInputHandler.bind(this));
 
-  this.onClick(this.wrapHurdlesElement, this.tagDeleteHandler.bind(this));
+  onClick(this.wrapHurdlesElement, this.tagDeleteHandler.bind(this));
 };
 
-DailyModal.hurdleData = [];
+DailyModal.prototype.hurdleData = [];
 
-DailyModal.tagDeleteHandler = function (event) {
+DailyModal.prototype.tagDeleteHandler = function (event) {
   const { target } = event;
 
   if (target.tagName !== 'BUTTON') return;
@@ -46,10 +49,10 @@ DailyModal.tagDeleteHandler = function (event) {
 
   this.hurdleData.splice(currentIndex, 1);
 
-  this.renderView(this.wrapHurdlesElement, this.drawTag(this.hurdleData));
+  this.wrapHurdlesElement.innerHTML = this.drawTag(this.hurdleData);
 };
 
-DailyModal.hurdleInputHandler = function (event) {
+DailyModal.prototype.hurdleInputHandler = function (event) {
   const { target, key, isComposing } = event;
 
   if (key === 'Enter' && isComposing) return;
@@ -58,31 +61,31 @@ DailyModal.hurdleInputHandler = function (event) {
     case ',':
       debounce(() => (target.value = null), 0.1);
       this.hurdleData.push(target.value);
-      this.renderView(this.wrapHurdlesElement, this.drawTag(this.hurdleData));
+      this.wrapHurdlesElement.innerHTML = this.drawTag(this.hurdleData);
       break;
 
     case 'Enter':
       debounce(() => (target.value = null), 0.1);
       this.hurdleData.push(target.value);
-      this.renderView(this.wrapHurdlesElement, this.drawTag(this.hurdleData));
+      this.wrapHurdlesElement.innerHTML = this.drawTag(this.hurdleData);
       break;
   }
 };
 
-DailyModal.radioHandler = function (event) {
+DailyModal.prototype.radioHandler = function (event) {
   if (event.target.value === '진행중') {
     this.hurdleElement.value = null;
-    this.disableHtml(this.scoreElement);
-    this.disableHtml(this.hurdleElement);
-    this.disableHtml(this.retrospectElement);
+    disableHtml(this.scoreElement);
+    disableHtml(this.hurdleElement);
+    disableHtml(this.retrospectElement);
   } else {
-    this.ableHtml(this.scoreElement);
-    this.ableHtml(this.hurdleElement);
-    this.ableHtml(this.retrospectElement);
+    enableHtml(this.scoreElement);
+    enableHtml(this.hurdleElement);
+    enableHtml(this.retrospectElement);
   }
 };
 
-DailyModal.radioBox = function (radioData) {
+DailyModal.prototype.radioBox = function (radioData) {
   return (
     radioData.reduce((html, item) => {
       const { id, name, value } = item;
@@ -101,7 +104,7 @@ DailyModal.radioBox = function (radioData) {
   );
 };
 
-DailyModal.selectBox = function (selectBoxData) {
+DailyModal.prototype.selectBox = function (selectBoxData) {
   const { labelText, id, name, optionData } = selectBoxData;
 
   const optionHtml =
@@ -119,7 +122,7 @@ DailyModal.selectBox = function (selectBoxData) {
     `;
 };
 
-DailyModal.drawTag = function (tagData) {
+DailyModal.prototype.drawTag = function (tagData) {
   return tagData.reduce((html, item, index) => {
     html += ` 
               <div class="tag">
@@ -132,7 +135,7 @@ DailyModal.drawTag = function (tagData) {
   }, '');
 };
 
-DailyModal.drawHtml = function () {
+DailyModal.prototype.drawDailyModalHtml = function () {
   return `
       <form action="#none">
         <div class="daily-record">

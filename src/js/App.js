@@ -7,7 +7,9 @@ export default {
     const currentPathName = window.location.pathname;
     const headerElement = document.querySelector('.header');
 
-    Header.render(headerElement);
+    const header = new Header(headerElement);
+
+    header.init();
 
     switch (currentPathName) {
       case '/':
