@@ -1,6 +1,6 @@
 const Tag = function () {};
 
-Tag.prototype.drawTag = function (tagData) {
+Tag.drawTag = function (tagData) {
   return tagData.reduce((html, item, index) => {
     html += ` 
               <div class="tag">

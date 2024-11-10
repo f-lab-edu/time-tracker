@@ -2,12 +2,12 @@ import { onChange } from '/js/utils/domEvents.js';
 
 const RadioBox = function () {};
 
-RadioBox.prototype.onChange = function (selector, cb) {
-  this.radiosElements = document.querySelectorAll(selector);
-  onChange(this.radiosElements, cb);
+RadioBox.onChange = function (selector, cb) {
+  const radioElements = document.querySelectorAll(selector);
+  onChange(radioElements, cb);
 };
 
-RadioBox.prototype.drawHtml = function (radioBoxData) {
+RadioBox.drawHtml = function (radioBoxData) {
   return radioBoxData.reduce((html, item) => {
     const { id, name, value, labelText } = item;
 

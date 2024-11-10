@@ -8,8 +8,9 @@ import {
 import ModalLayout from './ModalLayout.js';
 import debounce from '../utils/debounce.js';
 import RadioBox from '../common/RadioBox.js';
-import Tag from '../common/Tag.js';
 import SelectBox from '../common/SelectBox.js';
+import TagDrawHtml from '../common/Tag.js';
+
 import { spendTimeData, hourData, minuteData } from '/js/data/dailyModalData';
 
 const DailyModal = function () {
@@ -18,8 +19,7 @@ const DailyModal = function () {
 };
 
 DailyModal.prototype.init = function () {
-  this.selectBox = new SelectBox();
-  this.spendTimeRadioBox = new RadioBox();
+  // dailyModal 시작
   this.modalLayout.init(this.drawDailyModalHtml());
 
   this.scoreElement = document.querySelector('#score');
@@ -27,12 +27,7 @@ DailyModal.prototype.init = function () {
   this.retrospectElement = document.querySelector('#retrospect');
   this.wrapHurdlesElement = document.querySelector('.wrap-hurdles');
 
-  this.spendTimeRadioBox.onChange(
-    'input[name="spendTime"]',
-    this.radioHandler.bind(this),
-  );
-
-  this.hurdleTags = new Tag();
+  RadioBox.onChange('input[name="spendTime"]', this.radioHandler.bind(this));
 
   onClick(this.modalLayout.btnFooterCloseElement, () =>
     removeHtml(this.modalLayout.element),
@@ -53,8 +48,7 @@ DailyModal.prototype.tagDeleteHandler = function (event) {
   const currentIndex = Number(target.dataset.tagnumber);
 
   this.hurdleData.splice(currentIndex, 1);
-
-  this.wrapHurdlesElement.innerHTML = this.hurdleTags.drawTag(this.hurdleData);
+  this.wrapHurdlesElement.innerHTML = TagDrawHtml(this.hurdleData);
 };
 
 DailyModal.prototype.hurdleInputHandler = function (event) {
@@ -66,17 +60,13 @@ DailyModal.prototype.hurdleInputHandler = function (event) {
     case ',':
       debounce(() => (target.value = null), 0.1);
       this.hurdleData.push(target.value);
-      this.wrapHurdlesElement.innerHTML = this.hurdleTags.drawTag(
-        this.hurdleData,
-      );
+      this.wrapHurdlesElement.innerHTML = TagDrawHtml(this.hurdleData);
       break;
 
     case 'Enter':
       debounce(() => (target.value = null), 0.1);
       this.hurdleData.push(target.value);
-      this.wrapHurdlesElement.innerHTML = this.hurdleTags.drawTag(
-        this.hurdleData,
-      );
+      this.wrapHurdlesElement.innerHTML = TagDrawHtml(this.hurdleData);
       break;
   }
 };
@@ -107,9 +97,9 @@ DailyModal.prototype.drawDailyModalHtml = function () {
               집중한 시간
             </strong>
             <div class="daily-detail">
-              ${this.selectBox.drawSelects(hourData)}
+              ${SelectBox.drawSelects(hourData)}
               <span class="txt-time">시</span>
-              ${this.selectBox.drawSelects(minuteData)}
+              ${SelectBox.drawSelects(minuteData)}
               <span class="txt-time">분</span>
             </div>
           </div>
@@ -141,7 +131,7 @@ DailyModal.prototype.drawDailyModalHtml = function () {
             </strong>
             <div class="daily-detail">
               <div class="wrap-spend">
-                ${this.spendTimeRadioBox.drawHtml(spendTimeData)}
+                ${RadioBox.drawHtml(spendTimeData)}
               </div>
             </div>
           </div>

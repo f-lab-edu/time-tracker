@@ -1,6 +1,6 @@
 const SelectBox = function () {};
 
-SelectBox.prototype.drawSelects = function (selectBoxData) {
+SelectBox.drawSelects = function (selectBoxData) {
   const { labelText, id, name, optionData } = selectBoxData;
 
   const optionHtml =
