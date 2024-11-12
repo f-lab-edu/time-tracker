@@ -9,7 +9,7 @@ const HeaderDOM = function (element) {
 };
 
 HeaderDOM.prototype.create = function () {
-  this.element.innerHTML = this.drawHtml();
+  this.element.innerHTML = HeaderDOM.drawHtml();
 
   const titleDate = document.querySelector('.tit-date');
   titleDate.innerHTML = date.getCurrentMonthAndDay();
@@ -25,7 +25,7 @@ HeaderDOM.prototype.create = function () {
   onClick(btnHeaderRecord, this.dailyPopupHandler.bind(this));
 };
 
-HeaderDOM.prototype.drawHtml = function () {
+HeaderDOM.drawHtml = function () {
   return `
       <div class="header-inner">
         <h1>
