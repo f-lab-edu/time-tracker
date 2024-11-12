@@ -1,81 +1,94 @@
-import TrackerCommon from '../common/TrackerCommon.js';
+import {
+  onClick,
+  onKeydown,
+  disableHtml,
+  enableHtml,
+  removeHtml,
+} from '/js/utils/domEvents.js';
 import ModalLayout from './ModalLayout.js';
+import debounce from '../utils/debounce.js';
+import RadioBox from '../common/RadioBox.js';
+import SelectBox from '../common/SelectBox.js';
+import Tag from '../common/Tag.js';
+
 import { spendTimeData, hourData, minuteData } from '/js/data/dailyModalData';
 
-const DailyModal = Object.create(TrackerCommon);
-
-DailyModal.init = function () {
+const DailyModal = function () {
   const trackerModalElement = document.querySelector('#trackerModal');
+  this.modalLayout = new ModalLayout('Daily 기록하기', trackerModalElement);
+};
 
-  const drawHtml = {
-    title: 'Daily 기록하기',
-    modalContent: this.drawHtml(),
-  };
+DailyModal.prototype.dailyData = {
+  foncusedTime: '', // 오늘 하루중 시간
+  doing: '', // string
+  spendTime: '', // 30, 60, 90, inProgress
+  focusScore: '', // 1~100 (소수점 2째 자리 까지 허용)
+  hurdles: [], //배열
+  retrospect: '',
+};
 
-  ModalLayout.setup(trackerModalElement).render(drawHtml);
-
-  const spendTimeRadioElements = document.querySelectorAll(
-    'input[name="spendTime"]',
-  );
+DailyModal.prototype.create = function () {
+  // dailyModal 시작
+  this.modalLayout.create(DailyModal.drawHtml());
 
   this.scoreElement = document.querySelector('#score');
   this.hurdleElement = document.querySelector('#hurdle');
   this.retrospectElement = document.querySelector('#retrospect');
+  this.wrapHurdlesElement = document.querySelector('.wrap-hurdles');
 
-  this.onClick(ModalLayout.btnFooterCloseElement, () =>
-    this.removeView(ModalLayout.element),
+  RadioBox.onChange('input[name="spendTime"]', this.radioHandler.bind(this));
+
+  onClick(this.modalLayout.btnFooterCloseElement, () =>
+    removeHtml(this.modalLayout.element),
   );
 
-  this.onChange(spendTimeRadioElements, this.radioHandler.bind(this));
+  onKeydown(this.hurdleElement, this.hurdleInputHandler.bind(this));
+
+  onClick(this.wrapHurdlesElement, this.tagDeleteHandler.bind(this));
 };
 
-DailyModal.radioHandler = function (event) {
-  if (event.target.value === '진행중') {
-    this.disableHtml(this.scoreElement);
-    this.disableHtml(this.hurdleElement);
-    this.disableHtml(this.retrospectElement);
-  } else {
-    this.ableHtml(this.scoreElement);
-    this.ableHtml(this.hurdleElement);
-    this.ableHtml(this.retrospectElement);
+DailyModal.prototype.tagDeleteHandler = function (event) {
+  const { target } = event;
+
+  if (target.tagName !== 'BUTTON') return;
+
+  const currentIndex = Number(target.dataset.tagnumber);
+
+  this.dailyData.hurdles.splice(currentIndex, 1);
+  this.wrapHurdlesElement.innerHTML = Tag.drawHtml(this.dailyData.hurdles);
+};
+
+DailyModal.prototype.hurdleInputHandler = function (event) {
+  const { target, key, isComposing } = event;
+
+  if (key === 'Enter' && isComposing) return;
+
+  switch (key) {
+    case ',':
+      debounce(() => (target.value = null), 0.1);
+      this.dailyData.hurdles.push(target.value);
+      this.wrapHurdlesElement.innerHTML = Tag.drawHtml(this.dailyData.hurdles);
+      break;
+
+    case 'Enter':
+      debounce(() => (target.value = null), 0.1);
+      this.dailyData.hurdles.push(target.value);
+      this.wrapHurdlesElement.innerHTML = Tag.drawHtml(this.dailyData.hurdles);
+      break;
   }
 };
 
-DailyModal.radioBox = function (radioData) {
-  return (
-    radioData.reduce((html, item) => {
-      const { id, name, value } = item;
-
-      html += ` <div class="box-time">
-                  <input
-                    type="radio"
-                    id="${id}"
-                    name="${name}"
-                    value="${value}" />
-                  <label for="${id}">${id === 'inProgress' ? '진행중' : value + '분'}</label>
-                  </div>`;
-
-      return html;
-    }, '<div class="wrap-spend">') + '</div>'
-  );
-};
-
-DailyModal.selectBox = function (selectBoxData) {
-  const { labelText, id, name, optionData } = selectBoxData;
-
-  const optionHtml =
-    optionData.reduce((html, item) => {
-      const { value, text } = item;
-
-      html += `<option value="${value}">${text}</option>`;
-
-      return html;
-    }, `<select name="${name}" id="${id}" class="opt-time">`) + '</select>';
-
-  return `
-      <label for="${id}" class="blind">${labelText}</label>
-      ${optionHtml}
-    `;
+DailyModal.prototype.radioHandler = function (event) {
+  if (event.target.value === '진행중') {
+    this.hurdleElement.value = null;
+    disableHtml(this.scoreElement);
+    disableHtml(this.hurdleElement);
+    disableHtml(this.retrospectElement);
+  } else {
+    enableHtml(this.scoreElement);
+    enableHtml(this.hurdleElement);
+    enableHtml(this.retrospectElement);
+  }
 };
 
 DailyModal.drawHtml = function () {
@@ -91,9 +104,9 @@ DailyModal.drawHtml = function () {
               집중한 시간
             </strong>
             <div class="daily-detail">
-              ${this.selectBox(hourData)}
+              ${SelectBox.drawHtml(hourData)}
               <span class="txt-time">시</span>
-              ${this.selectBox(minuteData)}
+              ${SelectBox.drawHtml(minuteData)}
               <span class="txt-time">분</span>
             </div>
           </div>
@@ -124,7 +137,9 @@ DailyModal.drawHtml = function () {
               소요시간
             </strong>
             <div class="daily-detail">
-            ${this.radioBox(spendTimeData)}
+              <div class="wrap-spend">
+                ${RadioBox.drawHtml(spendTimeData)}
+              </div>
             </div>
           </div>
           <div class="wrap-daily">
@@ -150,16 +165,7 @@ DailyModal.drawHtml = function () {
                 id="hurdle"
                 class="tf-daily"
                 placeholder="방해된 요소를 입력해주세요." />
-              <div class="wrap-hurdles">
-                <div class="tag">
-                  <span class="txt-tag">youtube</span>
-                  <button type="button" class="btn-close">닫기</button>
-                </div>
-                <div class="tag">
-                  <span class="txt-tag">youtube</span>
-                  <button type="button" class="btn-close">닫기</button>
-                </div>
-              </div>
+              <div class="wrap-hurdles"></div>
             </div>
           </div>
           <div class="wrap-daily">
