@@ -55,7 +55,7 @@ DailyModal.prototype.tagDeleteHandler = function (event) {
   const currentIndex = Number(target.dataset.tagnumber);
 
   this.dailyData.hurdles.splice(currentIndex, 1);
-  this.wrapHurdlesElement.innerHTML = Tag.drawTag(this.dailyData.hurdles);
+  this.wrapHurdlesElement.innerHTML = Tag.drawHtml(this.dailyData.hurdles);
 };
 
 DailyModal.prototype.hurdleInputHandler = function (event) {
@@ -67,13 +67,13 @@ DailyModal.prototype.hurdleInputHandler = function (event) {
     case ',':
       debounce(() => (target.value = null), 0.1);
       this.dailyData.hurdles.push(target.value);
-      this.wrapHurdlesElement.innerHTML = Tag.drawTag(this.dailyData.hurdles);
+      this.wrapHurdlesElement.innerHTML = Tag.drawHtml(this.dailyData.hurdles);
       break;
 
     case 'Enter':
       debounce(() => (target.value = null), 0.1);
       this.dailyData.hurdles.push(target.value);
-      this.wrapHurdlesElement.innerHTML = Tag.drawTag(this.dailyData.hurdles);
+      this.wrapHurdlesElement.innerHTML = Tag.drawHtml(this.dailyData.hurdles);
       break;
   }
 };
@@ -104,9 +104,9 @@ DailyModal.prototype.drawDailyModalHtml = function () {
               집중한 시간
             </strong>
             <div class="daily-detail">
-              ${SelectBox.drawSelects(hourData)}
+              ${SelectBox.drawHtml(hourData)}
               <span class="txt-time">시</span>
-              ${SelectBox.drawSelects(minuteData)}
+              ${SelectBox.drawHtml(minuteData)}
               <span class="txt-time">분</span>
             </div>
           </div>

@@ -19,8 +19,8 @@ export const onClick = (element, cb) => {
 };
 
 export const onChange = (elements, cb) => {
-  elements.forEach(function (radio) {
-    radio.addEventListener('change', cb);
+  elements.forEach(function (element) {
+    element.addEventListener('change', cb);
   });
 };
 
