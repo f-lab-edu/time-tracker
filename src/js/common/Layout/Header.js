@@ -11,18 +11,18 @@ const HeaderDOM = function (element) {
 HeaderDOM.prototype.create = function () {
   this.element.innerHTML = this.drawHtml();
 
-  this.titleDate = document.querySelector('.tit-date');
-  this.titleDate.innerHTML = date.getCurrentMonthAndDay();
+  const titleDate = document.querySelector('.tit-date');
+  titleDate.innerHTML = date.getCurrentMonthAndDay();
 
-  this.btnTrackerElement = document.querySelector('.btn-tracker');
-  this.btnHeaderWeekly = document.querySelector('.btn-header-weekly');
-  this.btnHeaderRecord = document.querySelector('.btn-header-record');
+  const btnTrackerElement = document.querySelector('.btn-tracker');
+  const btnHeaderWeekly = document.querySelector('.btn-header-weekly');
+  const btnHeaderRecord = document.querySelector('.btn-header-record');
 
   this.dailyModal = new DailyModal();
 
-  onClick(this.btnTrackerElement, () => browserRouter(ROUTES.DAILY, 'daily'));
-  onClick(this.btnHeaderWeekly, () => browserRouter(ROUTES.WEEKLY, 'weekly'));
-  onClick(this.btnHeaderRecord, this.dailyPopupHandler.bind(this));
+  onClick(btnTrackerElement, () => browserRouter(ROUTES.DAILY, 'daily'));
+  onClick(btnHeaderWeekly, () => browserRouter(ROUTES.WEEKLY, 'weekly'));
+  onClick(btnHeaderRecord, this.dailyPopupHandler.bind(this));
 };
 
 HeaderDOM.prototype.drawHtml = function () {
