@@ -1,15 +1,15 @@
 import { ROUTES, route, browserRouter } from './routes';
 
-import Header from './common/Layout/Header';
+import HeaderDOM from './common/Layout/Header';
 
 export default {
   init() {
     const currentPathName = window.location.pathname;
     const headerElement = document.querySelector('.header');
 
-    const header = new Header(headerElement);
+    const header = new HeaderDOM(headerElement);
 
-    header.init();
+    header.create();
 
     switch (currentPathName) {
       case '/':

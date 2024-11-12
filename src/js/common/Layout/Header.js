@@ -4,13 +4,13 @@ import DailyModal from '/js/modal/DailyModal.js';
 
 import { ROUTES, browserRouter } from '/js/routes.js';
 
-const Header = function (element) {
+const HeaderDOM = function (element) {
   this.element = element;
-
-  this.element.innerHTML = this.drawHeaderHtml();
 };
 
-Header.prototype.init = function () {
+HeaderDOM.prototype.create = function () {
+  this.element.innerHTML = this.drawHtml();
+
   this.titleDate = document.querySelector('.tit-date');
   this.titleDate.innerHTML = date.getCurrentMonthAndDay();
 
@@ -25,7 +25,7 @@ Header.prototype.init = function () {
   onClick(this.btnHeaderRecord, this.dailyPopupHandler.bind(this));
 };
 
-Header.prototype.drawHeaderHtml = function () {
+HeaderDOM.prototype.drawHtml = function () {
   return `
       <div class="header-inner">
         <h1>
@@ -40,8 +40,8 @@ Header.prototype.drawHeaderHtml = function () {
     `;
 };
 
-Header.prototype.dailyPopupHandler = function () {
+HeaderDOM.prototype.dailyPopupHandler = function () {
   this.dailyModal.init();
 };
 
-export default Header;
+export default HeaderDOM;
