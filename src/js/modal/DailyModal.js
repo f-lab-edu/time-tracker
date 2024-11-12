@@ -9,13 +9,22 @@ import ModalLayout from './ModalLayout.js';
 import debounce from '../utils/debounce.js';
 import RadioBox from '../common/RadioBox.js';
 import SelectBox from '../common/SelectBox.js';
-import TagDrawHtml from '../common/Tag.js';
+import Tag from '../common/Tag.js';
 
 import { spendTimeData, hourData, minuteData } from '/js/data/dailyModalData';
 
 const DailyModal = function () {
   const trackerModalElement = document.querySelector('#trackerModal');
   this.modalLayout = new ModalLayout('Daily 기록하기', trackerModalElement);
+};
+
+DailyModal.prototype.dailyData = {
+  foncusedTime: '', // 오늘 하루중 시간
+  doing: '', // string
+  spendTime: '', // 30, 60, 90, inProgress
+  focusScore: '', // 1~100 (소수점 2째 자리 까지 허용)
+  hurdles: [], //배열
+  retrospect: '',
 };
 
 DailyModal.prototype.init = function () {
@@ -38,8 +47,6 @@ DailyModal.prototype.init = function () {
   onClick(this.wrapHurdlesElement, this.tagDeleteHandler.bind(this));
 };
 
-DailyModal.prototype.hurdleData = [];
-
 DailyModal.prototype.tagDeleteHandler = function (event) {
   const { target } = event;
 
@@ -47,8 +54,8 @@ DailyModal.prototype.tagDeleteHandler = function (event) {
 
   const currentIndex = Number(target.dataset.tagnumber);
 
-  this.hurdleData.splice(currentIndex, 1);
-  this.wrapHurdlesElement.innerHTML = TagDrawHtml(this.hurdleData);
+  this.dailyData.hurdles.splice(currentIndex, 1);
+  this.wrapHurdlesElement.innerHTML = Tag.drawTag(this.dailyData.hurdles);
 };
 
 DailyModal.prototype.hurdleInputHandler = function (event) {
@@ -59,14 +66,14 @@ DailyModal.prototype.hurdleInputHandler = function (event) {
   switch (key) {
     case ',':
       debounce(() => (target.value = null), 0.1);
-      this.hurdleData.push(target.value);
-      this.wrapHurdlesElement.innerHTML = TagDrawHtml(this.hurdleData);
+      this.dailyData.hurdles.push(target.value);
+      this.wrapHurdlesElement.innerHTML = Tag.drawTag(this.dailyData.hurdles);
       break;
 
     case 'Enter':
       debounce(() => (target.value = null), 0.1);
-      this.hurdleData.push(target.value);
-      this.wrapHurdlesElement.innerHTML = TagDrawHtml(this.hurdleData);
+      this.dailyData.hurdles.push(target.value);
+      this.wrapHurdlesElement.innerHTML = Tag.drawTag(this.dailyData.hurdles);
       break;
   }
 };

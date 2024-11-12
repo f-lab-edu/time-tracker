@@ -1,6 +1,7 @@
 const Tag = function () {};
 
 Tag.drawTag = function (tagData) {
+  console.log(tagData);
   return tagData.reduce((html, item, index) => {
     html += ` 
               <div class="tag">
