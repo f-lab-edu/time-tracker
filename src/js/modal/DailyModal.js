@@ -27,9 +27,9 @@ DailyModal.prototype.dailyData = {
   retrospect: '',
 };
 
-DailyModal.prototype.init = function () {
+DailyModal.prototype.create = function () {
   // dailyModal 시작
-  this.modalLayout.init(this.drawDailyModalHtml());
+  this.modalLayout.create(DailyModal.drawHtml());
 
   this.scoreElement = document.querySelector('#score');
   this.hurdleElement = document.querySelector('#hurdle');
@@ -91,7 +91,7 @@ DailyModal.prototype.radioHandler = function (event) {
   }
 };
 
-DailyModal.prototype.drawDailyModalHtml = function () {
+DailyModal.drawHtml = function () {
   return `
       <form action="#none">
         <div class="daily-record">

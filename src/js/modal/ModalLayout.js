@@ -3,8 +3,8 @@ const ModalLayout = function (title, element) {
   this.modalTitle = title;
 };
 
-ModalLayout.prototype.init = function (modalContentHtml) {
-  this.element.innerHTML = this.drawLayoutHtml(this.modalTitle);
+ModalLayout.prototype.create = function (modalContentHtml) {
+  this.element.innerHTML = this.drawHtml(this.modalTitle);
 
   this.contentElement = document.querySelector('.popup-content-body');
   this.btnFooterCloseElement = document.querySelector('.btn-footer-close');
@@ -12,7 +12,7 @@ ModalLayout.prototype.init = function (modalContentHtml) {
   this.contentElement.innerHTML = modalContentHtml;
 };
 
-ModalLayout.prototype.drawLayoutHtml = function (title) {
+ModalLayout.prototype.drawHtml = function (title) {
   return `
       <div class="popup">
         <div class="popup-content">

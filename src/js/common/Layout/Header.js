@@ -41,7 +41,7 @@ HeaderDOM.drawHtml = function () {
 };
 
 HeaderDOM.prototype.dailyPopupHandler = function () {
-  this.dailyModal.init();
+  this.dailyModal.create();
 };
 
 export default HeaderDOM;
