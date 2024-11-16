@@ -1,34 +1,31 @@
 import date from '/js/utils/date';
-import TrackerCommon from '/js/common/TrackerCommon';
+import { onClick } from '/js/utils/domEvents.js';
 import DailyModal from '/js/modal/DailyModal.js';
 
 import { ROUTES, browserRouter } from '/js/routes.js';
 
-const Header = Object.create(TrackerCommon);
-
-Header.render = function (element) {
-  this.setup(element).renderView(this.element, this.drawHtml()).init();
+const HeaderDOM = function (element) {
+  this.element = element;
 };
 
-Header.init = function () {
-  this.titleDate = document.querySelector('.tit-date');
-  this.titleDate.innerHTML = date.getCurrentMonthAndDay();
+HeaderDOM.prototype.create = function () {
+  this.element.innerHTML = HeaderDOM.drawHtml();
 
-  this.btnTrackerElement = document.querySelector('.btn-tracker');
-  this.btnHeaderWeekly = document.querySelector('.btn-header-weekly');
-  this.btnHeaderRecord = document.querySelector('.btn-header-record');
+  const titleDate = document.querySelector('.tit-date');
+  titleDate.innerHTML = date.getCurrentMonthAndDay();
 
-  this.onClick(this.btnTrackerElement, () =>
-    browserRouter(ROUTES.DAILY, 'daily'),
-  );
-  this.onClick(this.btnHeaderWeekly, () =>
-    browserRouter(ROUTES.WEEKLY, 'weekly'),
-  );
+  const btnTrackerElement = document.querySelector('.btn-tracker');
+  const btnHeaderWeekly = document.querySelector('.btn-header-weekly');
+  const btnHeaderRecord = document.querySelector('.btn-header-record');
 
-  this.onClick(this.btnHeaderRecord, this.dailyPopupHandler);
+  this.dailyModal = new DailyModal();
+
+  onClick(btnTrackerElement, () => browserRouter(ROUTES.DAILY, 'daily'));
+  onClick(btnHeaderWeekly, () => browserRouter(ROUTES.WEEKLY, 'weekly'));
+  onClick(btnHeaderRecord, this.dailyPopupHandler.bind(this));
 };
 
-Header.drawHtml = function () {
+HeaderDOM.drawHtml = function () {
   return `
       <div class="header-inner">
         <h1>
@@ -43,8 +40,8 @@ Header.drawHtml = function () {
     `;
 };
 
-Header.dailyPopupHandler = function () {
-  DailyModal.init();
+HeaderDOM.prototype.dailyPopupHandler = function () {
+  this.dailyModal.create();
 };
 
-export default Header;
+export default HeaderDOM;

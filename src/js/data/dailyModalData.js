@@ -3,21 +3,25 @@ export const spendTimeData = [
     id: 'minuit30',
     name: 'spendTime',
     value: '30',
+    labelText: '30분',
   },
   {
     id: 'minuit60',
     name: 'spendTime',
     value: '60',
+    labelText: '60분',
   },
   {
     id: 'minuit90',
     name: 'spendTime',
     value: '90',
+    labelText: '90분',
   },
   {
     id: 'inProgress',
     name: 'spendTime',
     value: '진행중',
+    labelText: '진행중',
   },
 ];
 
