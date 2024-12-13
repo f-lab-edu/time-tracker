@@ -1,15 +1,24 @@
 import { ROUTES, route, browserRouter } from './routes';
+import initDBTest from './utils/IndexedDBTest.js';
 
 import HeaderDOM from './common/Layout/Header';
 
 export default {
-  init() {
+  async init() {
     const currentPathName = window.location.pathname;
     const headerElement = document.querySelector('.header');
 
     const header = new HeaderDOM(headerElement);
 
     header.create();
+
+    try {
+      // IndexedDB 초기화
+      await initDBTest.open();
+      console.log('Database is ready for use!');
+    } catch (error) {
+      console.error('Error initializing database:', error);
+    }
 
     switch (currentPathName) {
       case '/':

@@ -5,6 +5,7 @@ import {
   enableHtml,
   removeHtml,
 } from '/js/utils/domEvents.js';
+import date from '/js/utils/date';
 import ModalLayout from './ModalLayout.js';
 import debounce from '../utils/debounce.js';
 import RadioBox from '../common/RadioBox.js';
@@ -19,6 +20,7 @@ const DailyModal = function () {
 };
 
 DailyModal.prototype.dailyData = {
+  today: date.getCurrentMonthAndDay('-'),
   foncusedTime: '', // 오늘 하루중 시간
   doing: '', // string
   spendTime: '', // 30, 60, 90, inProgress
@@ -59,14 +61,14 @@ DailyModal.prototype.submitHandler = function () {
   const scoreElement = this.dailyRecordForm.querySelector('#score');
   const retrospectElement = this.dailyRecordForm.querySelector('#retrospect');
 
-  if (!trackerWorkElement.value) {
-    alert('하는일 입력해 주세요.');
-    trackerWorkElement.focus();
-  }
-
-  if (!spendTimeCheckedElement) {
-    alert('소요 시간을 선택해주세요.');
-  }
+  // if (!trackerWorkElement.value) {
+  //   alert('하는일 입력해 주세요.');
+  //   trackerWorkElement.focus();
+  // }
+  //
+  // if (!spendTimeCheckedElement) {
+  //   alert('소요 시간을 선택해주세요.');
+  // }
 
   this.dailyData.foncusedTime = `${trackerHourElement.value}시 ${trackerMinuteElement.value}분`;
   this.dailyData.doing = trackerWorkElement.value;
@@ -74,7 +76,7 @@ DailyModal.prototype.submitHandler = function () {
   this.dailyData.focusScore = scoreElement.value;
   this.dailyData.retrospect = retrospectElement.value;
 
-  // Data를 추가 하는 부분은 다음 PR에서 진행
+  // indexedDB.addObjectStore('DAILY');
 };
 
 DailyModal.prototype.tagDeleteHandler = function (event) {

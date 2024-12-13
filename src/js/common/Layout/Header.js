@@ -12,7 +12,7 @@ HeaderDOM.prototype.create = function () {
   this.element.innerHTML = HeaderDOM.drawHtml();
 
   const titleDate = document.querySelector('.tit-date');
-  titleDate.innerHTML = date.getCurrentMonthAndDay();
+  titleDate.innerHTML = date.getCurrentMonthAndDay('.');
 
   const btnTrackerElement = document.querySelector('.btn-tracker');
   const btnHeaderWeekly = document.querySelector('.btn-header-weekly');

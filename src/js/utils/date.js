@@ -17,6 +17,9 @@ export default {
 
     return month[date.getMonth()];
   },
+  getFullYear(date) {
+    return date.getFullYear();
+  },
   getDay(date) {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -25,8 +28,10 @@ export default {
   getDate(date) {
     return date.getDate();
   },
-  getCurrentMonthAndDay() {
+  getCurrentMonthAndDay(separate) {
+    const txtSeparate = !!separate ? separate : '.';
+
     const date = new Date();
-    return `${this.getMonth(date)}. ${this.getDate(date)}. ${this.getDay(date)}`;
+    return `${this.getMonth(date)}${txtSeparate}${this.getDate(date)}${txtSeparate}${this.getDay(date)}`;
   },
 };
